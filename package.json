@@ -1,0 +1,25 @@
+{
+  "name": "twitter-interface",
+  "version": "1.0.0",
+  "description": "Treehouse Techdegree Project 7, April 2018.",
+  "main": "app.js",
+  "scripts": {
+    "test": "./node_modules/.bin/eslint app.js",
+    "start": "nodemon app.js"
+  },
+  "engines": {
+    "node": "^8.9.3"
+  },
+  "author": "Alessandro Pepe, github apepe1024",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "pug": "^2.0.3",
+    "twit": "^2.2.9"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "nodemon": "^1.17.3"
+  }
+}
