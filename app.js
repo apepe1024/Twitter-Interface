@@ -24,11 +24,11 @@ app.get("/", function (req, res, next) {
 //POST request; set tweet functionality through function call
 app.post("/", function (req, res, next) {
 	Twitter.sendTweet(req.body.text, next, function () {
-		res.redirect("/");
+		res.location("/");
 	});
 });
 //render error stack if error
-app.use(function (err, req, res) {
+app.use(function (err, req, res, next) {
 	console.error(err.stack);
 	res.status(500);
 	res.render("error", {

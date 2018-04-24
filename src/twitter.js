@@ -2,6 +2,7 @@
 //globals and definitions
 const config = require("../config");
 const Twit = require("twit");
+const moment = require('moment');
 const Twitter = new Twit(config);
 //function to collect all relevant twitter data
 function collectTwitterData(object, next, callback) {
@@ -48,7 +49,7 @@ function addSettings(resolve, reject) {
 		});
 	});
 }
-//reseolve user tweets
+//resolve user tweets
 function addStatuses(resolve, reject) {
 	Twitter.get("statuses/user_timeline", {count: 5}, function (err, data) {
 		if (err) {
@@ -57,16 +58,15 @@ function addStatuses(resolve, reject) {
 		const object = {};
 		const statuses = [];
 		for (let status of data) {
-			const statusObject = {
-				created_at: status.created_at,
-				favorite_count: status.favorite_count,
-				profile_image: status.user.profile_image_url_https,
-				retweet_count: status.retweet_count,
-				screen_name: status.user.screen_name,
-				text: status.text,
-				username: status.user.name
-			};
-			statuses.push(statusObject);
+			let statusObject = {}
+				statusObject.created_at = moment(status.created_at).format('ddd MMM do, YYYY, h:mm A');
+				statusObject.favorite_count = status.favorite_count;
+				statusObject.profile_image = status.user.profile_image_url_https;
+				statusObject.retweet_count = status.retweet_count;
+				statusObject.screen_name = status.user.screen_name;
+				statusObject.text = status.text;
+				statusObject.username = status.user.name;
+				statuses.push(statusObject);
 		}
 		object.statuses = statuses;
 		resolve(object);
@@ -101,13 +101,12 @@ function addMessages(resolve, reject) {
 		const object = {};
 		const messages = [];
 		for (let message of data) {
-			const messageObject = {
-				created_at: message.created_at,
-				profile_image: message.sender.profile_image_url_https,
-				sender: message.sender.name,
-				text: message.text
-			};
-			messages.push(messageObject);
+			let messageObject = {};
+				messageObject.created_at = moment(message.created_at).format('ddd MMM do, YYYY, h:mm A');
+				messageObject.profile_image = message.sender.profile_image_url_https;
+				messageObject.sender = message.sender.name;
+				messageObject.text = message.text;
+				messages.push(messageObject);
 		}
 		object.messages = messages;
 		resolve(object);
